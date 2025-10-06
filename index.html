@@ -230,15 +230,16 @@
     <div class="project-image">
         <img src="projects/your-project-name/board_photo.jpg" alt="Project running on FPGA">
     </div>
-    <h3 class="project-title">7-Segment Display Counter</h3>
+    <h3 class="project-title">Slow Clock</h3>
     <p class="project-description">
-        <strong>What it does:</strong> A 4-digit counter that displays values on seven-segment displays, with button controls for increment/decrement and reset.<br><br>
-        <strong>Design Logic:</strong> Used a binary-to-BCD converter module feeding into a BCD-to-7-segment decoder. Implemented debouncing for mechanical buttons to prevent false triggers. The design uses a state machine to handle button inputs and counter logic separately for cleaner code.<br><br>
-        <strong>Results:</strong> Runs at 100MHz on Basys3 board. Uses ~150 LUTs. Successfully tested with all button combinations.
-    </p>
+        <strong>What it does:</strong> Blinks an LED at 1Hz (once per second) by diciding down the FPGA's 100MHz clock to a human visible frequency.<br><br>
+        <strong>Design Logic:</strong> The FPGA's 100MHz clock is too fast for visible LED blinking (100 million cycles/second). Thsi design implements a clock divider using a 26-bit counter that increments on every clock cycle. When the counter reaches 50 million, it resets and toggles the output. Since toggling happens twice per second (at 50M and 100M), the LED blinks at 1 Hz. The 26-bit width was chosed as the 
+        minimum size needed to count to 50 million without wasting FPGA resources.<br><br>
+        <strong>Results:</strong> Successfully creates a 1Hz Square wave output.Runs at 100MHz on Basys3 board. Uses minimal resources. This frequency divider pattern is fundamental to many FPGA designs requiring human visible timing.
+    </p>    
     <div class="tech-stack">
         <span class="tech-tag">Verilog</span>
-        <span class="tech-tag">Vivado 2023.1</span>
+        <span class="tech-tag">Vivado 2025.1</span>
         <span class="tech-tag">Basys3</span>
     </div>
     <div class="project-links">
